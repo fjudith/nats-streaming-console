@@ -24,17 +24,23 @@ A web console for Nats Streaming Server.
 
 # Usage
 
-There are three ways to use Nats Streaming Console:
+There are four ways to use Nats Streaming Console:
 
 ## Docker
+
 The docker image is available from dockerhub
-[https://hub.docker.com/r/kuali/nats-streaming-console](https://hub.docker.com/r/kuali/nats-streaming-console)
+[https://hub.docker.com/r/mozgoo/nats-streaming-console](https://hub.docker.com/r/mozgoo/nats-streaming-console)
 
 ## Electron App
+
 Coming soon
 
+## NPM
+
 ## Checkout and run the Codes!
+
 If you just want to build and run it. That is pretty easy too. You will need git and nodejs.
+
 ```sh
 git clone https://github.com/KualiCo/nats-streaming-console.git
 cd nats-streaming-console

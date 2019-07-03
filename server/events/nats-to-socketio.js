@@ -18,7 +18,7 @@ exports.Bridge = class Bridge {
           sequence: msg.getSequence(),
           timestamp: msg.getTimestamp(),
           subject: msg.getSubject(),
-          data: msg.getData()
+          data: msg.getData(),
         }
         console.log({ channel, message })
         this.client.emit(channel, message)

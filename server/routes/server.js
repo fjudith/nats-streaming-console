@@ -15,8 +15,8 @@ exports.setServerOptions = async (req, res) => {
       method: 'get',
       baseURL: `http://${host}:${monitoringPort}/`,
       url: '/streaming/serverz',
-      headers: { 'Accept': 'application/json' },
-      proxy: false
+      headers: { Accept: 'application/json' },
+      proxy: false,
     })
     updateOptions(resp.data, host, port, monitoringPort)
     res.status(200).send({ options, data: resp.data })
@@ -27,7 +27,7 @@ exports.setServerOptions = async (req, res) => {
 }
 
 function updateOptions(data, host, port, monitoringPort) {
-  options.server = `nats://${host}:${port}`,
-  options.monitor = `http://${host}:${monitoringPort}`,
-  options.cluster = data.cluster_id
+  ;(options.server = `nats://${host}:${port}`),
+    (options.monitor = `http://${host}:${monitoringPort}`),
+    (options.cluster = data.cluster_id)
 }

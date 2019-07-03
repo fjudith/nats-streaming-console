@@ -19,7 +19,7 @@ import {
   TableRow,
   TableColumn,
   TextField,
-  Toolbar
+  Toolbar,
 } from 'react-md'
 import logo from '../img/nats-logo.png'
 import './style.css'
@@ -35,16 +35,13 @@ export default class Servers extends Component {
       monitoringPort: '8222',
       connected: false,
       config: undefined,
-      servers: undefined
+      servers: undefined,
     }
   }
 
   componentDidMount = async () => {
     try {
-      const [config, servers] = await Promise.all([
-        getServerConfig(),
-        getServers()
-      ])
+      const [config, servers] = await Promise.all([getServerConfig(), getServers()])
       console.log({ config, servers })
       this.setState({ connected: true, config, servers })
     } catch (err) {
@@ -78,9 +75,7 @@ export default class Servers extends Component {
       this.setState({ connected: true, config, servers })
     } catch (err) {
       this.setState({
-        error: `Could not connect. Check that your Nats Streaming Server is configured to allow monitoring at http://${
-          data.host
-        }:${data.monitoringPort}`
+        error: `Could not connect. Check that your Nats Streaming Server is configured to allow monitoring at http://${data.host}:${data.monitoringPort}`,
       })
     }
   }
@@ -106,57 +101,49 @@ export default class Servers extends Component {
         <Button floating fixed primary onClick={configure}>
           settings
         </Button>
-        {configEntries &&
-          configEntries.length && (
-            <DataTable plain>
-              <TableHeader>
-                <TableRow style={{ backgroundColor: '#111' }}>
-                  <TableColumn>Key</TableColumn>
-                  <TableColumn>Value</TableColumn>
+        {configEntries && configEntries.length && (
+          <DataTable plain>
+            <TableHeader>
+              <TableRow style={{ backgroundColor: '#111' }}>
+                <TableColumn>Key</TableColumn>
+                <TableColumn>Value</TableColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {configEntries.map(tuple => (
+                <TableRow key={tuple[0]}>
+                  <TableColumn>{tuple[0]}</TableColumn>
+                  <TableColumn>{tuple[1]}</TableColumn>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {configEntries.map(tuple => (
-                  <TableRow key={tuple[0]}>
-                    <TableColumn>{tuple[0]}</TableColumn>
-                    <TableColumn>{tuple[1]}</TableColumn>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </DataTable>
-          )}
-        {serversEntries &&
-          serversEntries.length && (
-            <DataTable plain>
-              <TableHeader>
-                <TableRow style={{ backgroundColor: '#111' }}>
-                  <TableColumn>Key</TableColumn>
-                  <TableColumn>Value</TableColumn>
+              ))}
+            </TableBody>
+          </DataTable>
+        )}
+        {serversEntries && serversEntries.length && (
+          <DataTable plain>
+            <TableHeader>
+              <TableRow style={{ backgroundColor: '#111' }}>
+                <TableColumn>Key</TableColumn>
+                <TableColumn>Value</TableColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {serversEntries.map(tuple => (
+                <TableRow key={tuple[0]}>
+                  <TableColumn>{tuple[0]}</TableColumn>
+                  <TableColumn>{tuple[1]}</TableColumn>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {serversEntries.map(tuple => (
-                  <TableRow key={tuple[0]}>
-                    <TableColumn>{tuple[0]}</TableColumn>
-                    <TableColumn>{tuple[1]}</TableColumn>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </DataTable>
-          )}
+              ))}
+            </TableBody>
+          </DataTable>
+        )}
       </section>
     )
   }
 
   renderUpdate() {
     const { error, host, port, monitoringPort } = this.state
-    const {
-      changeHost,
-      changePort,
-      changeMonitoringPort,
-      clearErrors,
-      submit
-    } = this
+    const { changeHost, changePort, changeMonitoringPort, clearErrors, submit } = this
     return (
       <section>
         <Card style={{ maxWidth: 600 }}>

@@ -3,13 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { getStores } from '../api/nats-streaming'
-import {
-  DataTable,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableColumn
-} from 'react-md'
+import { DataTable, TableHeader, TableBody, TableRow, TableColumn } from 'react-md'
 
 import './style.css'
 
@@ -20,7 +14,7 @@ export default class Stores extends Component {
     super(props)
 
     this.state = {
-      stores: undefined
+      stores: undefined,
     }
   }
 
@@ -44,9 +38,7 @@ export default class Stores extends Component {
             array.map(tuple => (
               <TableRow key={tuple[0]}>
                 <TableColumn>{tuple[0]}</TableColumn>
-                <TableColumn>
-                  {isString ? tuple[1] : this.toTable(tuple[1])}
-                </TableColumn>
+                <TableColumn>{isString ? tuple[1] : this.toTable(tuple[1])}</TableColumn>
               </TableRow>
             ))}
         </TableBody>
@@ -69,9 +61,7 @@ export default class Stores extends Component {
             stores.map(tuple => (
               <TableRow key={tuple[0]}>
                 <TableColumn>{tuple[0]}</TableColumn>
-                <TableColumn>
-                  {isString(tuple[1]) ? tuple[1] : this.toTable(tuple[1])}
-                </TableColumn>
+                <TableColumn>{isString(tuple[1]) ? tuple[1] : this.toTable(tuple[1])}</TableColumn>
               </TableRow>
             ))}
         </TableBody>
