@@ -1,6 +1,6 @@
 {
   "name": "nats-monitor",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": [
     "kuali",
     "acro5piano"
@@ -21,7 +21,7 @@
     "build": "npm-run-all -p build:*",
     "build:css": "node-sass-chokidar --include-path ./node_modules src/ -o src/",
     "watch:css": "npm run build:css -- --watch --recursive",
-    "start": "npm-run-all -p watch:css start:react",
+    "start": "npm-run-all -p server watch:css start:react",
     "start:react": "react-scripts start",
     "build:react": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
