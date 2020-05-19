@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nats-streaming-console
+  name: nats-streaming-console
+  namespace: nats-io
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nats-streaming-console
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nats-streaming-console
+    spec:
+      containers:
+      - image: docker.io/fjudith/nats-streaming-console:latest
+        name: nats-streaming-console
+        resources: {}
+        env:
+        - name: STAN_URL
+          value: nats://nats-cluster:4222
+        - name: STAN_MONITOR_URL
+          value: http://nats-streaming-mgmt:8222
+        - name: STAN_CLUSTER
+          value: stan-cluster
+        ports:
+        - name: http
+          containerPort: 8282
+status: {}
