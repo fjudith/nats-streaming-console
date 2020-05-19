@@ -1,9 +1,10 @@
 {
   "name": "nats-streaming-console",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": [
     "kuali",
-    "acro5piano"
+    "acro5piano",
+    "fjudith"
   ],
   "license": "MIT",
   "repository": {
