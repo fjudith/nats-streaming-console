@@ -1,4 +1,4 @@
-FROM node:8-alpine
+FROM node:9-alpine
 
 ENV USER_HOME=/home/nats-streaming-console
 
