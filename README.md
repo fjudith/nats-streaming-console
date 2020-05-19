@@ -7,9 +7,9 @@ This repository is forked from [nats-streaming-console](https://github.com/Kuali
 # Install
 
 ```
-npm -g install nats-monitor
+npm -g install nats-streaming-console
 
-nats-monitor
+nats-streaming-console
 ```
 
 For other installation method, please read the below.
@@ -37,7 +37,7 @@ For other installation method, please read the below.
 # Configuration
 
 ```
-env STAN_URL=nats://127.0.0.1:4222 STAN_MONITOR_URL=http://127.0.0.1:8222 STAN_CLUSTER=my-cluster nats-monitor
+env STAN_URL=nats://127.0.0.1:4222 STAN_MONITOR_URL=http://127.0.0.1:8222 STAN_CLUSTER=my-cluster nats-streaming-console
 
 ```
 
