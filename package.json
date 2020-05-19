@@ -1,5 +1,5 @@
 {
-  "name": "nats-monitor",
+  "name": "nats-streaming-console",
   "version": "1.0.7",
   "author": [
     "kuali",
@@ -8,13 +8,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/acro5piano/nats-streaming-console.git"
+    "url": "https://github.com/fjudith/nats-streaming-console.git"
   },
   "bugs": {
-    "url": "https://github.com/acro5piano/nats-streaming-console/issues"
+    "url": "https://github.com/fjudith/nats-streaming-console/issues"
   },
   "bin": {
-    "nats-monitor": "./bin/nats-monitor"
+    "nats-streaming-console": "./bin/nats-streaming-console"
   },
   "scripts": {
     "prepublish": "yarn build",
