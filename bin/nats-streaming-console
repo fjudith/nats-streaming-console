@@ -1,3 +1,7 @@
 #!/usr/bin/env node
 
 require('../server')
+
+process.on('SIGINT', function() {
+    process.exit();
+});
