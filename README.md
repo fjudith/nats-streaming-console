@@ -36,9 +36,8 @@ For other installation method, please read the below.
 
 # Configuration
 
-```
+```bash
 env STAN_URL=nats://127.0.0.1:4222 STAN_MONITOR_URL=http://127.0.0.1:8222 STAN_CLUSTER=my-cluster nats-streaming-console
-
 ```
 
 # Usage
@@ -48,7 +47,7 @@ There are four ways other than npm to use Nats Monitor:
 ## Docker
 
 The docker image is available from dockerhub
-[https://hub.docker.com/r/mozgoo/nats-streaming-console](https://hub.docker.com/r/mozgoo/nats-streaming-console)
+<https://hub.docker.com/r/fjudith/nats-streaming-console>
 
 ## Electron App
 
