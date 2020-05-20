@@ -9,16 +9,16 @@ exports.getServerOptions = async (req, res) => {
 }
 
 exports.setServerOptions = async (req, res) => {
-  const { host, port, monitoringPort } = req.body
+  const { host, port, monitoringHost, monitoringPort } = req.body
   try {
     const resp = await axios({
       method: 'get',
-      baseURL: `http://${host}:${monitoringPort}/`,
+      baseURL: `http://${monitoringHost}:${monitoringPort}/`,
       url: '/streaming/serverz',
       headers: { Accept: 'application/json' },
       proxy: false,
     })
-    updateOptions(resp.data, host, port, monitoringPort)
+    updateOptions(resp.data, host, port, monitoringHost, monitoringPort)
     res.status(200).send({ options, data: resp.data })
   } catch (err) {
     console.log({ err })
@@ -26,8 +26,8 @@ exports.setServerOptions = async (req, res) => {
   }
 }
 
-function updateOptions(data, host, port, monitoringPort) {
+function updateOptions(data, host, port, monitoringHost, monitoringPort) {
   ;(options.server = `nats://${host}:${port}`),
-    (options.monitor = `http://${host}:${monitoringPort}`),
+    (options.monitor = `http://${monitoringHost}:${monitoringPort}`),
     (options.cluster = data.cluster_id)
 }
