@@ -8,14 +8,14 @@ import WebFontLoader from 'webfontloader'
 
 WebFontLoader.load({
   google: {
-    families: ['Roboto:300,400,500,700', 'Material Icons']
-  }
+    families: ['Roboto:300,400,500,700', 'Material Icons'],
+  },
 })
 
 render(
   <BrowserRouter>
     <App />
   </BrowserRouter>,
-  document.getElementById('root')
+  document.getElementById('root'),
 )
 registerServiceWorker()

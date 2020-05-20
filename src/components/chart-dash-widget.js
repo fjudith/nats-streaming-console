@@ -8,7 +8,7 @@ import './style.css'
 export default class ChartWidget extends Component {
   static propTypes = {
     data: PropTypes.any.isRequired,
-    title: PropTypes.string
+    title: PropTypes.string,
   }
 
   getClientDimensions = () => {
@@ -47,7 +47,7 @@ export default class ChartWidget extends Component {
             wrapperStyle={{
               backgroundColor: 'rgba(255, 255, 255, .1)',
               border: 'none',
-              borderRadius: '2px'
+              borderRadius: '2px',
             }}
           />
           <Area

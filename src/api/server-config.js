@@ -10,7 +10,7 @@ export async function getServerConfig() {
   return axios({
     method: 'get',
     url: '/api/server',
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   }).then(resp => resp.data)
 }
 
@@ -19,6 +19,6 @@ export async function updateServerConfig(data) {
     method: 'post',
     url: '/api/server',
     headers: { 'Content-Type': 'application/json' },
-    data
+    data,
   }).then(resp => resp.data)
 }

@@ -11,7 +11,7 @@ import './style.css'
 
 export default class Clients extends Component {
   state = {
-    timeSeries: []
+    timeSeries: [],
   }
 
   async componentDidMount() {
@@ -25,19 +25,13 @@ export default class Clients extends Component {
 
   getMonitorData = async () => {
     try {
-      const [channelSummary, clientSummary] = await Promise.all([
-        getChannels(),
-        getClients()
-      ])
+      const [channelSummary, clientSummary] = await Promise.all([getChannels(), getClients()])
       const stats = {}
       const channels = channelSummary.channels
       const clients = clientSummary.clients
       if (channels && isArray(channels)) {
         stats.channels = channels.length
-        stats.messages = channels.reduce(
-          (count, channel) => (count += channel.msgs),
-          0
-        )
+        stats.messages = channels.reduce((count, channel) => (count += channel.msgs), 0)
       }
       if (clients && isArray(clients)) {
         stats.clients = clients.length
@@ -59,47 +53,32 @@ export default class Clients extends Component {
     const tsClone = ts.slice(ts.length >= 60 ? 1 : 0)
     const lastValues = last(ts)
     tsClone.push(
-      Object.assign({
-        name: date.toLocaleTimeString(),
-        newMsgs: lastValues ? stats.messages - lastValues.messages : 0
-      }, stats)
+      Object.assign(
+        {
+          name: date.toLocaleTimeString(),
+          newMsgs: lastValues ? stats.messages - lastValues.messages : 0,
+        },
+        stats,
+      ),
     )
     return tsClone
   }
 
   render() {
-    const {
-      clients,
-      channels,
-      messages,
-      subscriptions,
-      timeSeries
-    } = this.state
+    const { clients, channels, messages, subscriptions, timeSeries } = this.state
     return (
       <section className="view">
         {clients !== undefined && (
           <NumberWidget number={clients} title="Clients" text="Total Clients" />
         )}
         {channels !== undefined && (
-          <NumberWidget
-            number={channels}
-            title="Channels"
-            text="Total Channels"
-          />
+          <NumberWidget number={channels} title="Channels" text="Total Channels" />
         )}
         {subscriptions !== undefined && (
-          <NumberWidget
-            number={subscriptions}
-            title="Subscriptions"
-            text="Active Subscriptions"
-          />
+          <NumberWidget number={subscriptions} title="Subscriptions" text="Active Subscriptions" />
         )}
         {messages !== undefined && (
-          <NumberWidget
-            number={messages}
-            title="Messages"
-            text="Total Messages"
-          />
+          <NumberWidget number={messages} title="Messages" text="Total Messages" />
         )}
         <ChartWidget data={timeSeries} title="New Messages" />
         <Footer />

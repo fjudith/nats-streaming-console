@@ -26,7 +26,7 @@ spec:
         - name: STAN_URL
           value: nats://nats-cluster:4222
         - name: STAN_MONITOR_URL
-          value: http://nats-cluster-mgmt:8222
+          value: http://nats-streaming-mgmt:8222
         - name: STAN_CLUSTER
           value: stan-cluster
         ports:

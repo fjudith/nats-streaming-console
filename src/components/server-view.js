@@ -19,7 +19,7 @@ import {
   TableRow,
   TableColumn,
   TextField,
-  Toolbar
+  Toolbar,
 } from 'react-md'
 import logo from '../img/nats-logo.png'
 import './style.css'
@@ -32,19 +32,17 @@ export default class Servers extends Component {
     this.state = {
       host: 'localhost',
       port: '4222',
+      monitoringHost: 'localhost',
       monitoringPort: '8222',
       connected: false,
       config: undefined,
-      servers: undefined
+      servers: undefined,
     }
   }
 
   componentDidMount = async () => {
     try {
-      const [config, servers] = await Promise.all([
-        getServerConfig(),
-        getServers()
-      ])
+      const [config, servers] = await Promise.all([getServerConfig(), getServers()])
       console.log({ config, servers })
       this.setState({ connected: true, config, servers })
     } catch (err) {
@@ -66,21 +64,23 @@ export default class Servers extends Component {
     this.setState({ port: value })
   }
 
+  changeMonitoringHost = value => {
+    this.setState({ monitoringHost: value })
+  }
+
   changeMonitoringPort = value => {
     this.setState({ monitoringPort: value })
   }
 
   submit = async () => {
-    const data = pick(this.state, ['host', 'port', 'monitoringPort'])
+    const data = pick(this.state, ['host', 'port', 'monitoringHost', 'monitoringPort'])
     try {
       const { options: config, data: servers } = await updateServerConfig(data)
       console.log({ config, servers })
       this.setState({ connected: true, config, servers })
     } catch (err) {
       this.setState({
-        error: `Could not connect. Check that your Nats Streaming Server is configured to allow monitoring at http://${
-          data.host
-        }:${data.monitoringPort}`
+        error: `Could not connect. Check that your Nats Streaming Server is configured to allow monitoring at http://${data.monitoringHost}:${data.monitoringPort}`,
       })
     }
   }
@@ -106,57 +106,49 @@ export default class Servers extends Component {
         <Button floating fixed primary onClick={configure}>
           settings
         </Button>
-        {configEntries &&
-          configEntries.length && (
-            <DataTable plain>
-              <TableHeader>
-                <TableRow style={{ backgroundColor: '#111' }}>
-                  <TableColumn>Key</TableColumn>
-                  <TableColumn>Value</TableColumn>
+        {configEntries && configEntries.length && (
+          <DataTable plain>
+            <TableHeader>
+              <TableRow style={{ backgroundColor: '#111' }}>
+                <TableColumn>Key</TableColumn>
+                <TableColumn>Value</TableColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {configEntries.map(tuple => (
+                <TableRow key={tuple[0]}>
+                  <TableColumn>{tuple[0]}</TableColumn>
+                  <TableColumn>{tuple[1]}</TableColumn>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {configEntries.map(tuple => (
-                  <TableRow key={tuple[0]}>
-                    <TableColumn>{tuple[0]}</TableColumn>
-                    <TableColumn>{tuple[1]}</TableColumn>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </DataTable>
-          )}
-        {serversEntries &&
-          serversEntries.length && (
-            <DataTable plain>
-              <TableHeader>
-                <TableRow style={{ backgroundColor: '#111' }}>
-                  <TableColumn>Key</TableColumn>
-                  <TableColumn>Value</TableColumn>
+              ))}
+            </TableBody>
+          </DataTable>
+        )}
+        {serversEntries && serversEntries.length && (
+          <DataTable plain>
+            <TableHeader>
+              <TableRow style={{ backgroundColor: '#111' }}>
+                <TableColumn>Key</TableColumn>
+                <TableColumn>Value</TableColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {serversEntries.map(tuple => (
+                <TableRow key={tuple[0]}>
+                  <TableColumn>{tuple[0]}</TableColumn>
+                  <TableColumn>{tuple[1]}</TableColumn>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {serversEntries.map(tuple => (
-                  <TableRow key={tuple[0]}>
-                    <TableColumn>{tuple[0]}</TableColumn>
-                    <TableColumn>{tuple[1]}</TableColumn>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </DataTable>
-          )}
+              ))}
+            </TableBody>
+          </DataTable>
+        )}
       </section>
     )
   }
 
   renderUpdate() {
-    const { error, host, port, monitoringPort } = this.state
-    const {
-      changeHost,
-      changePort,
-      changeMonitoringPort,
-      clearErrors,
-      submit
-    } = this
+    const { error, host, port, monitoringHost, monitoringPort } = this.state
+    const { changeHost, changePort, changeMonitoringHost, changeMonitoringPort, clearErrors, submit } = this
     return (
       <section>
         <Card style={{ maxWidth: 600 }}>
@@ -177,6 +169,13 @@ export default class Servers extends Component {
               value={port}
               placeholder="4222"
               onChange={changePort}
+            />
+            <TextField
+              id="monitoring-host"
+              label="Monitoring Host"
+              value={monitoringHost}
+              placeholder="localhost"
+              onChange={changeMonitoringHost}
             />
             <TextField
               id="monitoring-port"

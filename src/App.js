@@ -19,37 +19,37 @@ const navItems = [
     label: 'Home',
     to: '/',
     exact: true,
-    icon: 'home'
+    icon: 'home',
   },
   {
     label: 'Clients',
     to: '/clients',
-    icon: 'perm_identity'
+    icon: 'perm_identity',
   },
   {
     label: 'Channels',
     to: '/channels',
-    icon: 'inbox'
+    icon: 'inbox',
   },
   {
     label: 'Server',
     to: '/server',
-    icon: 'dns'
+    icon: 'dns',
   },
   {
     label: 'Store',
     to: '/store',
-    icon: 'store'
-  }
+    icon: 'store',
+  },
 ]
 
 const styles = {
-  content: { minHeight: 'auto' }
+  content: { minHeight: 'auto' },
 }
 
 class App extends Component {
   static propTypes = {
-    location: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
   }
 
   constructor(props) {

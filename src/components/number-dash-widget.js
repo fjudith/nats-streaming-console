@@ -8,7 +8,7 @@ export default class NumberWidget extends Component {
   static propTypes = {
     number: PropTypes.number.isRequired,
     text: PropTypes.string,
-    title: PropTypes.string
+    title: PropTypes.string,
   }
 
   render() {

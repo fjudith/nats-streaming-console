@@ -21,7 +21,7 @@ function flattenData(data) {
   })
   return {
     data: flattenedData,
-    keys: keys
+    keys: keys,
   }
 }
 

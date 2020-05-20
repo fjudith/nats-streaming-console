@@ -200,7 +200,7 @@ export function getServers() {
   return axios({
     method: 'get',
     url: '/streaming/serverz',
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   }).then(resp => resp.data)
 }
 
@@ -209,7 +209,7 @@ export function getStores() {
   return axios({
     method: 'get',
     url: '/streaming/storez',
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   }).then(resp => resp.data)
 }
 
@@ -219,9 +219,9 @@ export function getClients() {
     method: 'get',
     url: '/streaming/clientsz',
     params: {
-      subs: 1
+      subs: 1,
     },
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   }).then(resp => resp.data)
 }
 
@@ -231,9 +231,9 @@ export function getChannels() {
     method: 'get',
     url: '/streaming/channelsz',
     params: {
-      subs: 1
+      subs: 1,
     },
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   }).then(resp => resp.data)
 }
 
@@ -241,6 +241,6 @@ export function getMessages(channel) {
   return axios({
     method: 'get',
     url: `/api/channel/${channel}/message`,
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   }).then(resp => resp.data)
 }

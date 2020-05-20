@@ -20,7 +20,7 @@ import {
   TableRow,
   TextField,
   Toolbar,
-  Subheader
+  Subheader,
 } from 'react-md'
 
 import './style.css'
@@ -44,7 +44,7 @@ export default class ChannelView extends Component {
       loading: true,
       focusedChannel: undefined,
       width: '0',
-      height: '0'
+      height: '0',
     }
   }
 
@@ -64,10 +64,7 @@ export default class ChannelView extends Component {
 
   getMonitorData = async () => {
     this.setState({ loading: true })
-    const [channelSummary, clientSummary] = await Promise.all([
-      getChannels(),
-      getClients()
-    ])
+    const [channelSummary, clientSummary] = await Promise.all([getChannels(), getClients()])
     const channelMap = keyBy(channelSummary.channels, 'name')
     const clientMap = keyBy(clientSummary.clients, 'id')
     this.setState({
@@ -77,7 +74,7 @@ export default class ChannelView extends Component {
       clientMap,
       loading: false,
       focusedChannel: undefined,
-      focusedChannelMessages: undefined
+      focusedChannelMessages: undefined,
     })
   }
 
@@ -86,9 +83,9 @@ export default class ChannelView extends Component {
     const { name, last_seq } = channel
     this.setState({
       focusedChannel: channel,
-      focusedChannelMessages: undefined
+      focusedChannelMessages: undefined,
     })
-    const opts = (last_seq)
+    const opts = last_seq
       ? { startAtSequence: Math.max(last_seq - 30, 0) }
       : { startAtTimeDelta: 300000 }
     const messages = []
@@ -114,7 +111,7 @@ export default class ChannelView extends Component {
       focusedChannel,
       loading,
       height,
-      width
+      width,
     } = this.state
 
     console.log('render Home.js')
@@ -147,9 +144,7 @@ export default class ChannelView extends Component {
             <List>{this.renderMessages()}</List>
           </div>
         )}
-        {detail && detailFormat === 'json'
-          ? this.renderJsonDialog()
-          : this.renderDatatableDialog()}
+        {detail && detailFormat === 'json' ? this.renderJsonDialog() : this.renderDatatableDialog()}
       </section>
     )
   }
@@ -166,15 +161,11 @@ export default class ChannelView extends Component {
           }
           return map
         },
-        {}
+        {},
       )
     }
     return map(filtered, (channel, name) => {
-      const expander = channel.msgs ? (
-        <FontIcon>chevron_right</FontIcon>
-      ) : (
-        undefined
-      )
+      const expander = channel.msgs ? <FontIcon>chevron_right</FontIcon> : undefined
 
       return (
         <ListItem
@@ -225,7 +216,7 @@ export default class ChannelView extends Component {
                   padding: '3px 4px 2px',
                   borderRadius: '2px',
                   backgroundColor: '#333',
-                  marginRight: '7px'
+                  marginRight: '7px',
                 }}
               >
                 {sequence}
@@ -234,7 +225,7 @@ export default class ChannelView extends Component {
                 style={{
                   fontSize: '.9em',
                   fontWeight: 'normal',
-                  color: '#bbb'
+                  color: '#bbb',
                 }}
               >
                 {new Date(timestamp).toLocaleString()}
@@ -244,7 +235,7 @@ export default class ChannelView extends Component {
           onClick={() => {
             this.setState({
               detail: JSON.parse(data),
-              detailFormat: 'json'
+              detailFormat: 'json',
             })
           }}
         />
@@ -258,8 +249,8 @@ export default class ChannelView extends Component {
       {
         children: 'ok',
         onClick: () => this.setState({ detail: null, detailFormat: null }),
-        primary: true
-      }
+        primary: true,
+      },
     ]
     return (
       <DialogContainer
@@ -288,8 +279,8 @@ export default class ChannelView extends Component {
       {
         children: 'ok',
         onClick: () => this.setState({ detail: null }),
-        primary: true
-      }
+        primary: true,
+      },
     ]
     return (
       <DialogContainer

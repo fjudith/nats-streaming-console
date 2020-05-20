@@ -20,7 +20,7 @@ import {
   TableRow,
   TextField,
   Toolbar,
-  Subheader
+  Subheader,
 } from 'react-md'
 
 import './style.css'
@@ -45,7 +45,7 @@ export default class ClientView extends Component {
       focusedClient: undefined,
       focusedSubscription: undefined,
       width: '0',
-      height: '0'
+      height: '0',
     }
   }
 
@@ -65,10 +65,7 @@ export default class ClientView extends Component {
 
   getMonitorData = async () => {
     this.setState({ loading: true })
-    const [channelSummary, clientSummary] = await Promise.all([
-      getChannels(),
-      getClients()
-    ])
+    const [channelSummary, clientSummary] = await Promise.all([getChannels(), getClients()])
     const channelMap = keyBy(channelSummary.channels, 'name')
     const clientMap = keyBy(clientSummary.clients, 'id')
     this.setState({
@@ -80,7 +77,7 @@ export default class ClientView extends Component {
       focusedClient: this.state.focusedClient
         ? this.state.focusedClient
         : find(clientMap, () => true),
-      focusedSubscription: undefined
+      focusedSubscription: undefined,
     })
   }
 
@@ -92,7 +89,7 @@ export default class ClientView extends Component {
     const { _channel, last_sent } = subscription
     this.setState({
       focusedSubscription: subscription,
-      focusedSubscriptionMessages: undefined
+      focusedSubscriptionMessages: undefined,
     })
     const opts = last_sent
       ? { startAtSequence: Math.max(last_sent - 30, 0) }
@@ -120,7 +117,7 @@ export default class ClientView extends Component {
       focusedSubscriptionMessages,
       loading,
       height,
-      width
+      width,
     } = this.state
 
     console.log('render Home.js')
@@ -147,31 +144,28 @@ export default class ClientView extends Component {
           </div>
           <List className="menu-list">{this.renderClients()}</List>
         </div>
-        {focusedClient &&
-          focusedClient.subscriptions && (
-            <div className="menu-wrapper">
-              <Toolbar title="Subscriptions" themed />
-              <div className="menu-input">
-                <TextField
-                  id="subscription-filter"
-                  label="Filter"
-                  value={channelFilter}
-                  inlineIndicator={<Button icon>search</Button>}
-                  onChange={value => this.setState({ channelFilter: value })}
-                />
-              </div>
-              <List className="menu-list">{this.renderSubscriptions()}</List>
+        {focusedClient && focusedClient.subscriptions && (
+          <div className="menu-wrapper">
+            <Toolbar title="Subscriptions" themed />
+            <div className="menu-input">
+              <TextField
+                id="subscription-filter"
+                label="Filter"
+                value={channelFilter}
+                inlineIndicator={<Button icon>search</Button>}
+                onChange={value => this.setState({ channelFilter: value })}
+              />
             </div>
-          )}
+            <List className="menu-list">{this.renderSubscriptions()}</List>
+          </div>
+        )}
         {focusedSubscription && (
           <div className="menu-wrapper">
             <Toolbar title="Messages" themed />
             <List className="menu-list">{this.renderMessages()}</List>
           </div>
         )}
-        {detail && detailFormat === 'json'
-          ? this.renderJsonDialog()
-          : this.renderDatatableDialog()}
+        {detail && detailFormat === 'json' ? this.renderJsonDialog() : this.renderDatatableDialog()}
       </section>
     )
   }
@@ -188,23 +182,17 @@ export default class ClientView extends Component {
           }
           return map
         },
-        {}
+        {},
       )
     }
     return map(filtered, (client, name) => {
-      const expander = client.subscriptions ? (
-        <FontIcon>chevron_right</FontIcon>
-      ) : (
-        undefined
-      )
+      const expander = client.subscriptions ? <FontIcon>chevron_right</FontIcon> : undefined
 
       return (
         <ListItem
           key={name}
           primaryText={name}
-          secondaryText={
-            <span>Subscriptions: {size(client.subscriptions)}</span>
-          }
+          secondaryText={<span>Subscriptions: {size(client.subscriptions)}</span>}
           secondaryTextStyle={{ fontSize: '.8em', color: '#bbb' }}
           leftIcon={
             <FontIcon
@@ -237,23 +225,19 @@ export default class ClientView extends Component {
           }
           return map
         },
-        {}
+        {},
       )
     }
     return map(filtered, (sub, name) => {
       const subscription = sub[0]
       const { queue_name, last_sent } = subscription
-      const [_client, _durableName] = subscription.queue_name 
+      const [_client, _durableName] = subscription.queue_name
         ? subscription.queue_name.split(':')
         : [subscription.client_id, '-not durable-']
       console.log({ subscription, x: subscription.queue_name, _client, _durableName })
       Object.assign(subscription, { _channel: name, _client, _durableName })
 
-      const expander = last_sent ? (
-        <FontIcon>chevron_right</FontIcon>
-      ) : (
-        undefined
-      )
+      const expander = last_sent ? <FontIcon>chevron_right</FontIcon> : undefined
 
       return (
         <ListItem
@@ -275,7 +259,7 @@ export default class ClientView extends Component {
                 e.stopPropagation()
                 this.setState({
                   detail: subscription,
-                  detailFormat: 'datatable'
+                  detailFormat: 'datatable',
                 })
               }}
             >
@@ -284,9 +268,7 @@ export default class ClientView extends Component {
           }
           rightIcon={expander}
           active={focusedSubscription && name === focusedSubscription._channel}
-          onClick={
-            last_sent ? () => this.focusSubscription(subscription) : () => {}
-          }
+          onClick={last_sent ? () => this.focusSubscription(subscription) : () => {}}
         />
       )
     })
@@ -309,7 +291,7 @@ export default class ClientView extends Component {
                   padding: '3px 4px 2px',
                   borderRadius: '2px',
                   backgroundColor: '#333',
-                  marginRight: '7px'
+                  marginRight: '7px',
                 }}
               >
                 {sequence}
@@ -318,7 +300,7 @@ export default class ClientView extends Component {
                 style={{
                   fontSize: '.9em',
                   fontWeight: 'normal',
-                  color: '#bbb'
+                  color: '#bbb',
                 }}
               >
                 {new Date(timestamp).toLocaleString()}
@@ -328,7 +310,7 @@ export default class ClientView extends Component {
           onClick={() => {
             this.setState({
               detail: JSON.parse(data),
-              detailFormat: 'json'
+              detailFormat: 'json',
             })
           }}
         />
@@ -342,8 +324,8 @@ export default class ClientView extends Component {
       {
         children: 'ok',
         onClick: () => this.setState({ detail: null, detailFormat: null }),
-        primary: true
-      }
+        primary: true,
+      },
     ]
     return (
       <DialogContainer
@@ -372,8 +354,8 @@ export default class ClientView extends Component {
       {
         children: 'ok',
         onClick: () => this.setState({ detail: null }),
-        primary: true
-      }
+        primary: true,
+      },
     ]
     return (
       <DialogContainer
